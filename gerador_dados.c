@@ -15,14 +15,14 @@ void gerar_renavam(char* buffer) {
 }
 
 // Retorna um ponteiro para um modelo de carro aleatório
-const char* gerar_modelo() {
+const char * gerar_modelo() {
     const char* modelos[] = {"Gol", "Uno", "Palio", "Onix", "HB20", "Kwid", "Mobi", "Argo", "Compass", "Renegade", "T-Cross", "Creta"};
     int num_modelos = sizeof(modelos) / sizeof(modelos[0]);
     return modelos[rand() % num_modelos];
 }
 
 // Retorna um ponteiro para uma cor aleatória
-const char* gerar_cor() {
+const char * gerar_cor() {
     const char* cores[] = {"Preto", "Branco", "Prata", "Vermelho", "Azul", "Cinza"};
     int num_cores = sizeof(cores) / sizeof(cores[0]);
     return cores[rand() % num_cores];
@@ -45,10 +45,10 @@ int main() {
 
     fprintf(fp, "renavam,modelo,ano,cor\n"); // Cabeçalho
 
-    // Usar um set simples (array grande) para verificar a unicidade do renavam seria ineficiente.
+    // Usar um set simples (array grande) para verificar a unicidade do renavam seria ineficiente
     // Para 10.000 registros, a chance de colisão é baixa, mas para um sistema real,
     // seria necessário uma estrutura de dados mais robusta. Para este trabalho, vamos assumir
-    // que as colisões são raras e não as trataremos para simplificar.
+    // que as colisões são raras e não as trataremos para simplificar
     char renavam[RENAVAM_LEN + 1];
     for (int i = 0; i < NUM_REGISTROS; i++) {
         gerar_renavam(renavam);

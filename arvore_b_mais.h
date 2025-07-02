@@ -20,15 +20,15 @@ typedef struct BPlusTree {
 // --- Protótipos das Funções ---
 
 // Cria e retorna uma nova árvore B+
-BPlusTree* create_bplus_tree(int order);
+BPlusTree * create_bplus_tree(int order);
 
 // Insere um par (chave, valor) na árvore
-void insert(BPlusTree* tree, const char* key, void* value);
+void insert(BPlusTree * tree, const char * key, void * value);
 
 // Busca por uma chave e retorna o valor associado
-void* search(BPlusTree* tree, const char* key);
+void * search(BPlusTree * tree, const char * key);
 
 // Libera toda a memória alocada pela árvore
-void free_bplus_tree(BPlusTree* tree);
+void free_bplus_tree (BPlusTree * tree);
 
 #endif

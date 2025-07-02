@@ -13,7 +13,7 @@ void split_internal_node(BPlusTree* tree, Node* node);
 
 // --- Funções Auxiliares Internas ---
 
-Node* create_node(int order, int is_leaf) {
+Node * create_node(int order, int is_leaf) {
     Node* new_node = (Node*)malloc(sizeof(Node));
     if (!new_node) return NULL;
 
@@ -38,7 +38,7 @@ void free_node(Node* node) {
     free(node);
 }
 
-void free_tree_recursive(Node* node) {
+void free_tree_recursive(Node * node) {
     if (node == NULL) return;
     if (!node->is_leaf) {
         for (int i = 0; i <= node->num_keys; i++) {
@@ -48,7 +48,7 @@ void free_tree_recursive(Node* node) {
     free_node(node);
 }
 
-Node* find_leaf(BPlusTree* tree, const char* key) {
+Node * find_leaf(BPlusTree * tree, const char * key) {
     Node* node = tree->root;
     while (!node->is_leaf) {
         int i = 0;
@@ -61,7 +61,7 @@ Node* find_leaf(BPlusTree* tree, const char* key) {
     return node;
 }
 
-void insert_into_node_no_split(Node* node, const char* key, void* pointer_or_value) {
+void insert_into_node_no_split(Node * node, const char * key, void * pointer_or_value) {
     int i = node->num_keys;
     // Encontra a posição correta para a nova chave, movendo as maiores para a direita
     while (i > 0 && strcmp(key, node->keys[i - 1]) < 0) {
@@ -86,7 +86,7 @@ void insert_into_node_no_split(Node* node, const char* key, void* pointer_or_val
     node->num_keys++;
 }
 
-void insert_into_parent(BPlusTree* tree, Node* left, Node* right, const char* key_to_promote) {
+void insert_into_parent(BPlusTree * tree, Node * left, Node * right, const char * key_to_promote) {
     Node* parent = left->parent;
     
     if (parent == NULL) {
@@ -118,8 +118,8 @@ void insert_into_parent(BPlusTree* tree, Node* left, Node* right, const char* ke
     }
 }
 
-void split_leaf_node(BPlusTree* tree, Node* leaf) {
-    int mid_index = (tree->order) / 2; // Arredonda para cima para dividir
+void split_leaf_node(BPlusTree * tree, Node * leaf) {
+    int mid_index = (tree->order) / 2; // Arredonda para cima
     
     Node* new_leaf = create_node(tree->order, 1);
     
@@ -141,7 +141,7 @@ void split_leaf_node(BPlusTree* tree, Node* leaf) {
     insert_into_parent(tree, leaf, new_leaf, key_to_promote);
 }
 
-void split_internal_node(BPlusTree* tree, Node* node) {
+void split_internal_node(BPlusTree * tree, Node * node) {
     int mid_index = (tree->order - 1) / 2;
     const char* key_to_promote = node->keys[mid_index];
     
@@ -167,15 +167,15 @@ void split_internal_node(BPlusTree* tree, Node* node) {
     insert_into_parent(tree, node, new_node, key_to_promote);
 }
 
-void insert(BPlusTree* tree, const char* key, void* value) {
+void insert(BPlusTree * tree, const char * key, void * value) {
     Node* leaf = find_leaf(tree, key);
 
     // SE O NÓ ESTIVER CHEIO, DIVIDA-O PRIMEIRO.
     if (leaf->num_keys == tree->order - 1) {
         split_leaf_node(tree, leaf);
         
-        // Após a divisão, a nova chave pode pertencer ao nó original ou ao novo nó.
-        // Precisamos selecionar o nó folha correto para a inserção.
+        // Após a divisão, a nova chave pode pertencer ao nó original ou ao novo nó
+        // Precisamos selecionar o nó folha correto para a inserção
         if (strcmp(key, leaf->next_leaf->keys[0]) >= 0) {
             leaf = leaf->next_leaf;
         }
@@ -185,7 +185,7 @@ void insert(BPlusTree* tree, const char* key, void* value) {
     insert_into_node_no_split(leaf, key, value);
 }
 
-void insert_into_parent(BPlusTree* tree, Node* left, Node* right, const char* key) {
+void insert_into_parent(BPlusTree * tree, Node * left, Node * right, const char * key) {
     Node* parent = left->parent;
     
     if (parent == NULL) {
@@ -218,7 +218,7 @@ void insert_into_parent(BPlusTree* tree, Node* left, Node* right, const char* ke
 
 // --- Funções Públicas ---
 
-BPlusTree* create_bplus_tree(int order) {
+BPlusTree * create_bplus_tree(int order) {
     if (order < 3) {
         fprintf(stderr, "A ordem deve ser no mínimo 3.\n");
         return NULL;
@@ -229,7 +229,7 @@ BPlusTree* create_bplus_tree(int order) {
     return tree;
 }
 
-void insert(BPlusTree* tree, const char* key, void* value) {
+void insert(BPlusTree * tree, const char * key, void * value) {
     Node* leaf = find_leaf(tree, key);
 
     int i = 0;
@@ -254,7 +254,7 @@ void insert(BPlusTree* tree, const char* key, void* value) {
 }
 
 
-void* search(BPlusTree* tree, const char* key) {
+void * search(BPlusTree * tree, const char * key) {
     Node* leaf = find_leaf(tree, key);
     for (int i = 0; i < leaf->num_keys; i++) {
         if (strcmp(key, leaf->keys[i]) == 0) {
@@ -264,7 +264,7 @@ void* search(BPlusTree* tree, const char* key) {
     return NULL;
 }
 
-void free_bplus_tree(BPlusTree* tree) {
+void free_bplus_tree(BPlusTree * tree) {
     if (!tree) return;
     free_tree_recursive(tree->root);
     free(tree);
