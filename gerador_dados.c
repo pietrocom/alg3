@@ -7,7 +7,7 @@
 #define RENAVAM_LEN 11
 
 // Função para gerar um RENAVAM aleatório de 11 dígitos
-void gerar_renavam(char* buffer) {
+void gerar_renavam(char * buffer) {
     for (int i = 0; i < RENAVAM_LEN; i++) {
         buffer[i] = (rand() % 10) + '0';
     }
@@ -45,10 +45,6 @@ int main() {
 
     fprintf(fp, "renavam,modelo,ano,cor\n"); // Cabeçalho
 
-    // Usar um set simples (array grande) para verificar a unicidade do renavam seria ineficiente
-    // Para 10.000 registros, a chance de colisão é baixa, mas para um sistema real,
-    // seria necessário uma estrutura de dados mais robusta. Para este trabalho, vamos assumir
-    // que as colisões são raras e não as trataremos para simplificar
     char renavam[RENAVAM_LEN + 1];
     for (int i = 0; i < NUM_REGISTROS; i++) {
         gerar_renavam(renavam);

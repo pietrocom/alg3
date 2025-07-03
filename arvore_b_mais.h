@@ -1,6 +1,11 @@
 #ifndef ARVORE_B_MAIS_H
 #define ARVORE_B_MAIS_H
 
+typedef enum {
+    BUSCA_LINEAR,
+    BUSCA_BINARIA
+} TipoBusca;
+
 // Estrutura para um nó da árvore
 typedef struct Node {
     int is_leaf;
@@ -13,14 +18,15 @@ typedef struct Node {
 
 // Estrutura para a árvore B+
 typedef struct BPlusTree {
-    Node* root;
+    Node * root;
     int order;
+    TipoBusca search_mode;
 } BPlusTree;
 
 // --- Protótipos das Funções ---
 
 // Cria e retorna uma nova árvore B+
-BPlusTree * create_bplus_tree(int order);
+BPlusTree * create_bplus_tree(int order, TipoBusca mode);
 
 // Insere um par (chave, valor) na árvore
 void insert(BPlusTree * tree, const char * key, void * value);
