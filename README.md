@@ -56,7 +56,7 @@ Para testar a nova hipótese, o algoritmo de busca interna foi otimizado para um
 >
 > **Análise:** Este resultado valida a hipótese. Com a busca no nó se tornando barata, o *trade-off* entre a altura da árvore e o processamento do nó volta a ser o fator determinante, como previsto pela teoria clássica de algoritmos.
 
-## 結論 Conclusão
+## Conclusão
 
 Este trabalho demonstrou experimentalmente que o dimensionamento ótimo dos nós de uma Árvore B+ em memória depende criticamente do algoritmo de busca interna utilizado.
 
